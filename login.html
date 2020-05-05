@@ -3,16 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./index.css">
+
     <title>Document</title>
 
 </head>
 <body>
     <form>
-      
-        <div class="container">
-          <label for="uname"><b>Username</b></label>
-          <input id="username" type="text" onchange="textChange()" placeholder="Enter Username" name="uname" required>
-          <a href="index.html">Play!</a>
+      <h2 class="login-header">Hacker House</h2>
+        <div class="container-login">
+          <h4>Can You Escape the Hacker House?</h4>
+          <div>
+            <input id="username" type="text" onchange="textChange()" placeholder="Enter Username" name="uname" required>
+          </div>
+          <div>  
+            <a href="index.html">Play!</a>
+          </div>
         </div>
       </form>
       <script>

@@ -4,3 +4,86 @@
 #startModal{
     display: block;
 }
+@font-face {
+    font-family: retro;
+    src: url(./assets/fonts/PressStart2P-Regular.ttf);
+}
+body{
+    margin: 0px;
+    background: url('./assets/images/retrocity.gif') no-repeat ;
+    background-size: 100% 100%;
+    font-family: retro;
+}
+.container-login{
+    background-color: white;    
+    width: 40%;
+    height: 200px;
+    margin: auto;
+    margin-top: 120px;
+    padding: 50px;
+    box-shadow: 10px 10px 5px -6px rgba(5,5,5,0.65);
+    text-align: center;
+}
+input,button{
+    cursor: url('./assets/images/download.png') 7 0,pointer;
+}
+.container-login a{
+    color: #fff;
+    background-color: #209cee;
+    border-image-slice: 2;
+    border-image-width: 2;
+    border-image-repeat: stretch;
+    border-image-source: url('data:image/svg+xml;utf8,<?xml version="1.0" encoding="UTF-8" ?><svg version="1.1" width="5" height="5" xmlns="http://www.w3.org/2000/svg"><path d="M2 1 h1 v1 h-1 z M1 2 h1 v1 h-1 z M3 2 h1 v1 h-1 z M2 3 h1 v1 h-1 z" fill="rgb(33,37,41)" /></svg>');
+    border-image-outset: 2;
+    position: relative;
+    display: inline-block;
+    padding: 6px 8px;
+    margin: 4px;
+    text-align: center;
+    vertical-align: middle;
+    cursor: url('./assets/images/download.png') 7 0,pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    color: #fff;
+    border-style: solid;
+    border-width: 4px;
+    -webkit-appearance: none;
+    margin-top: 20px;
+    font-size: 10px;
+}
+.container-login a::after{
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    bottom: -4px;
+    left: -4px;
+    content: "";
+    box-shadow: inset -4px -4px #006bb3;
+
+}
+html{
+    cursor: url('./assets/images/cursorbody.png'),auto;
+    height: 100%;
+}
+.login-header{
+    width: 60%;
+    margin: auto;
+    margin-top: 50px;
+    text-align: center;
+    font-size: 35px;
+}
+.info-display{
+    position: absolute;
+    width: 300px;
+    padding: 10px 15px;
+    border: 5px solid black;
+    margin: 10px 7px;
+}
+.high-score,.timer,.health{
+    margin-bottom: 10px;
+}
+.high-score{
+    margin-top: 25px;
+}
