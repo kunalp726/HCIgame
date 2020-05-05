@@ -5,7 +5,11 @@
 		<meta charset="utf-8" />
 		<title>Learn Game Development at ZENVA.com</title>
 
-		<script type="text/javascript" src="js/phaser.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+		<link rel="stylesheet" href="./index.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/phaser.min.js"></script>
 		<script type="text/javascript" src="js/Boot.js"></script>
 		<script type="text/javascript" src="js/Preload.js"></script>
 		<script type="text/javascript" src="js/Game.js"></script>
@@ -21,5 +25,74 @@
 	<body>  
 		<!-- include the main game file -->
 		<script src="js/main.js"></script>
+		<h4 class="welcome-user"></h4>
+		<div class="high-score"></div>
+		<div class="timer"></div>
+		<div class="health"></div>
+		<div class="modal fade" id="questionModal" role="dialog">
+			<div class="modal-dialog">
+			
+			  <!-- Modal content-->
+			  <div class="modal-content">
+				<div class="modal-header">
+				  <button type="button" class="close" data-dismiss="modal">&times;</button>
+				  <h4 class="modal-title">Modal Header</h4>
+				</div>
+				<div class="modal-body">
+				  <div class="question"></div>
+				  <div class="options"></div>
+				  <div class="select-options"></div>
+				  <div class="input-box"><input class="answer-input"  type="text"/></div>
+				  <div class="message-display"></div>
+				</div>
+				<div class="modal-footer">
+				  <button class="answer" type="button" class="btn btn-default" data-dismiss="modal">Submit Answer</button>
+				</div>
+			  </div>
+			  
+			</div>
+		  </div>
+		  <div class="modal fade in" id="startModal" role="dialog">
+			<div class="modal-dialog">
+			
+			  <!-- Modal content-->
+			  <div class="modal-content">
+				<div class="modal-header">
+				  <button type="button" class="close" data-dismiss="modal">&times;</button>
+				  <h4 class="modal-title">Instructions</h4>
+				</div>
+				<div class="modal-body">
+				  <p>Answer Questions to get out of the house!</p>
+				</div>
+				<div class="modal-footer">
+				  <button class="start-game" type="button" class="btn btn-default" data-dismiss="modal">Start Game</button>
+				</div>
+			  </div>
+			  
+			</div>
+		  </div>
+		  <div class="modal fade" id="gameOverModal" role="dialog">
+			<div class="modal-dialog">
+			
+			  <!-- Modal content-->
+			  <div class="modal-content">
+				<div class="modal-header">
+				  <button type="button" class="close" data-dismiss="modal">&times;</button>
+				  <h4 class="modal-title"></h4>
+				</div>
+				<div class="modal-body">
+				 <div class="special-message"></div>
+				 <div class="high-score"></div>
+				 <div class="your-score"></div>
+				</div>
+				<div class="modal-footer">
+				  <a class="quit" href="login.html" class="btn btn-default" data-dismiss="modal">Quit</a>
+				  <button class="newGame" type="button" class="btn btn-default" data-dismiss="modal">Play Again</button>
+				</div>
+			  </div>
+			  
+			</div>
+		  </div>
+
 	</body>
 </html>
