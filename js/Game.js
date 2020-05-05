@@ -131,8 +131,10 @@ function gameComplete(state) {
       localStorage.setItem('highscore', score);
       modal.find('.special-message').text("Congratulations! You have set a new high score!");
     }
-    modal.find('.high-score').text(`Current High score ${highscore}`);
-    modal.find('.your-score').text(`Your score ${score}`);
+    modal.find('.high-score').text(`Current High score: ${highscore}`);
+    modal.find('.your-score').text(`Your score: ${score}`);
+    modal.find(".completion-time").text(`Completion time: ${minutes} minutes ${seconds} seconds \n`);
+
   } else {
     modal.find('.modal-title').text("Game Over! You couldn't escape!");
     modal.find('.high-score').text(`Current High score: ${highscore}`);
@@ -227,7 +229,6 @@ function setupTimerHealth() {
     $(".timer").text(`Time : ${minutes}:${seconds}:${totalTime % 10} \n`);
     $(".health").text(`Health left: ${health} % \n`);
     $(".high-score").text(`Current High: ${highscore} \n`);
-
   }, 100);
 }
 function setupInputEvent() {
