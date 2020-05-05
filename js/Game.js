@@ -2,11 +2,15 @@ var TopDownGame = TopDownGame || {};
 
 //title screen
 var question = 0;
-var totalTime=0;
-var seconds=0;
-var minutes=0;
-var benefits=0;
-var doorCleared=0;
+var totalTime = 0;
+var seconds = 0;
+var minutes = 0;
+var benefits = 0;
+var doorCleared = 0;
+var wronganswers = 0;
+var highscore = localStorage.getItem('highscore') || 0;
+var gameOver=false;
+var timeInterval=null;
 var questionArray = [
   {
     ques: 'What does the “https://” at the beginning of a URL denote, as opposed to "http://"?',
@@ -15,138 +19,245 @@ var questionArray = [
       'That information entered into the site is encrypted',
       'That the site is the newest version available',
       'That the site is not accessible to certain computers'],
-      type:'mcq',
-      answer:'That information entered into the site is encrypted'
-    },
+    type: 'mcq',
+    answer: 'That information entered into the site is encrypted'
+  },
   {
     ques: 'You have search functionality on a website. Complete this SQL injection attack to delete all tables. Select * from where name=',
-      type:'task',
-      answer:'1=1;drop table'
-    },
+    type: 'task',
+    answer: '1=1;drop table'
+  },
+  {
+    ques: 'What does the “https://” at the beginning of a URL denote, as opposed to "http://"?',
+    options: [
+      'That the site has special high definition',
+      'That information entered into the site is encrypted',
+      'That the site is the newest version available',
+      'That the site is not accessible to certain computers'],
+    type: 'mcq',
+    answer: 'That information entered into the site is encrypted'
+  },
+  {
+    ques: 'What does the “https://” at the beginning of a URL denote, as opposed to "http://"?',
+    options: [
+      'That the site has special high definition',
+      'That information entered into the site is encrypted',
+      'That the site is the newest version available',
+      'That the site is not accessible to certain computers'],
+    type: 'mcq',
+    answer: 'That information entered into the site is encrypted'
+  },
+  {
+    ques: 'What does the “https://” at the beginning of a URL denote, as opposed to "http://"?',
+    options: [
+      'That the site has special high definition',
+      'That information entered into the site is encrypted',
+      'That the site is the newest version available',
+      'That the site is not accessible to certain computers'],
+    type: 'mcq',
+    answer: 'That information entered into the site is encrypted'
+  },
+  {
+    ques: 'What does the “https://” at the beginning of a URL denote, as opposed to "http://"?',
+    options: [
+      'That the site has special high definition',
+      'That information entered into the site is encrypted',
+      'That the site is the newest version available',
+      'That the site is not accessible to certain computers'],
+    type: 'mcq',
+    answer: 'That information entered into the site is encrypted'
+  },
+  {
+    ques: 'What does the “https://” at the beginning of a URL denote, as opposed to "http://"?',
+    options: [
+      'That the site has special high definition',
+      'That information entered into the site is encrypted',
+      'That the site is the newest version available',
+      'That the site is not accessible to certain computers'],
+    type: 'mcq',
+    answer: 'That information entered into the site is encrypted'
+  },
+  {
+    ques: 'What does the “https://” at the beginning of a URL denote, as opposed to "http://"?',
+    options: [
+      'That the site has special high definition',
+      'That information entered into the site is encrypted',
+      'That the site is the newest version available',
+      'That the site is not accessible to certain computers'],
+    type: 'mcq',
+    answer: 'That information entered into the site is encrypted'
+  },
+  {
+    ques: 'What does the “https://” at the beginning of a URL denote, as opposed to "http://"?',
+    options: [
+      'That the site has special high definition',
+      'That information entered into the site is encrypted',
+      'That the site is the newest version available',
+      'That the site is not accessible to certain computers'],
+    type: 'mcq',
+    answer: 'That information entered into the site is encrypted'
+  },
+  {
+    ques: 'What does the “https://” at the beginning of a URL denote, as opposed to "http://"?',
+    options: [
+      'That the site has special high definition',
+      'That information entered into the site is encrypted',
+      'That the site is the newest version available',
+      'That the site is not accessible to certain computers'],
+    type: 'mcq',
+    answer: 'That information entered into the site is encrypted'
+  },
 ];
-var currentAnswer="";
-var health=100;
+var currentAnswer = "";
+var health = 10;
 TopDownGame.Game = function () { };
 this.doorObj = null;
 this.updateBackup = null;
-this.modalOpen=true;
+this.modalOpen = true;
 
-function gameComplete(state){
-  const modal=$("#gameOverModal");
-  if(state=="win"){
-    modal.find('')
-  }else{
 
-  }
-  modal.css('display','block');
-  modal.addClass('in');
+function reset() {
+  $("#gameOverModal .newGame").on('click', function () {
+    location.reload();
+  });
 }
-function hideModal(){
+function gameComplete(state) {
+  clearInterval(timeInterval);
+  const modal = $("#gameOverModal");
+  if (state == "win") {
+    modal.find('.modal-title').text("Yay! You have Escaped !");
+    let score = 2000 - totalTime - benefits - (wronganswers * 50);
+    if (score > highscore) {
+      localStorage.setItem('highscore', score);
+      modal.find('.special-message').text("Congratulations! You have set a new high score!");
+      modal.find('.high-score').text(`Current High score ${score}`);
+      modal.find('.your-score').text(`Your score ${score}`);
+    }
+  } else {
+    modal.find('.modal-title').text("Game Over! You couldn't escape!");
+    modal.find('.high-score').text(`Current High score: ${highscore}`);
+    modal.find('.your-score').text(`Your score: ${0}`);
+  }
+  modal.css('display', 'block');
+  modal.addClass('in');
+  $("#questionModal").removeClass('in');
+  $("#questionModal").css('display', 'none');
+
+}
+function hideModal() {
   $('#questionModal .answer').on('click', function () {
     //display message on correct/wrong answer
 
-   
-    if(currentAnswer==questionArray[question].answer){
+
+    if (currentAnswer == questionArray[question].answer) {
       doorCleared++;
       $('#questionModal .message-display').text("Correct Answer! Door Opened");
-      setTimeout(function(){
+      setTimeout(function () {
         $('#questionModal .message-display').text("");
         question++;
         window.doorObj.destroy();
-        window.modalOpen=false;
-        $("#questionModal").css('display','none');
+        window.modalOpen = false;
+        $("#questionModal").css('display', 'none');
         $("#questionModal").removeClass('in');
-        $(".input-box").css("display","none");
+        $(".input-box").css("display", "none");
         $(".input-box").val("");
-        $(".select-options").css("display","none");
+        $(".select-options").css("display", "none");
         $(".select-options").empty();
-        if(doorCleared==5){
+        if (doorCleared == 5) {
           gameComplete("win");
         }
-      },1000)
+      }, 1000)
 
-    }else{
+    } else {
       $('#questionModal .message-display').text("Wrong Answer");
-      health-=33;
-      if(health<=0){
-        //game Over;
+      health -= 34;
+      wronganswers++;
+      if (health <= 0) {
+        gameOver=true;
+        $("#questionModal").removeClass('in');
+        $("#questionModal").css('display', 'none');
+        gameComplete("lose");
+      } else {
+        setTimeout(function () {
+          question++;
+          $('#questionModal .message-display').text("");
+          $(".input-box").css("display", "none");
+          $(".input-box").val("");
+          $(".select-options").css("display", "none");
+          $(".select-options").empty();
+          fillQuestion($("#questionModal"));
+        }, 1000)
       }
-      setTimeout(function(){
-        question++;
-        $('#questionModal .message-display').text("");
-        $(".input-box").css("display","none");
-        $(".input-box").val("");
-        $(".select-options").css("display","none");
-        $(".select-options").empty();
-        fillQuestion($("#questionModal"));
-      },1000)
     }
 
 
 
     //display message for one second and close out the modal
-   
+
   });
 }
 
-function setUpStartModal(){
-  $("#startModal .start-game").on('click',function(){
-    window.modalOpen=false;
-    $("#startModal").css({'display':'block','z-index':'-1'});
+function setUpStartModal() {
+  $("#startModal .start-game").on('click', function () {
+    window.modalOpen = false;
+    $("#startModal").css({ 'display': 'block', 'z-index': '-1' });
     $("#startModal").removeClass('in');
     setupTimerHealth();
   });
 }
-function setupTimerHealth(){
-  setInterval(function(){
-    totalTime+=1;
-    seconds=Math.floor(totalTime/10)%60;
-    minutes=Math.floor(Math.floor(totalTime/10)/60)
-    $(".timer").text(`Time : ${minutes}:${seconds}:${totalTime%10}`);
+function setupTimerHealth() {
+  timeInterval = setInterval(function () {
+    totalTime += 1;
+    seconds = Math.floor(totalTime / 10) % 60;
+    minutes = Math.floor(Math.floor(totalTime / 10) / 60)
+    $(".timer").text(`Time : ${minutes}:${seconds}:${totalTime % 10}`);
     $(".health").text(`Health Remaining: ${health} %`);
-  },100);
+    $(".high-score").text(`Current High Score: ${highscore}`);
+    
+  }, 100);
 }
-function setupInputEvent(){
-  $(".answer-input").change(function(){
-     currentAnswer=this.value;
-     console.log(currentAnswer)
+function setupInputEvent() {
+  $(".answer-input").change(function () {
+    currentAnswer = this.value;
+    console.log(currentAnswer)
   });
- 
+
 }
 
-function radioChanged(){
- let x= $("input[name='answer']:checked")[0].value;
- currentAnswer=x.split("-").join(" ");
- console.log(currentAnswer);
+function radioChanged() {
+  let x = $("input[name='answer']:checked")[0].value;
+  currentAnswer = x.split("-").join(" ");
+  console.log(currentAnswer);
 }
-function fillQuestion(modal){
-  modal.find(".question").text(questionArray[question].ques);
+function fillQuestion(modal) {
+  modal.find(".question").text(`${question+1}. ${questionArray[question].ques}`);
   let quesType = questionArray[question].type;
-  if(quesType==="mcq"){
-    const options=questionArray[question].options.map((opt,index)=>{
-        return (`<div><input type="radio" onchange="radioChanged()" name="answer" value=${opt.replace(/\s/g, '-')}>${opt}</option><div>`)
+  if (quesType === "mcq") {
+    const options = questionArray[question].options.map((opt, index) => {
+      return (`<div><input type="radio" onchange="radioChanged()" name="answer" value=${opt.replace(/\s/g, '-')}>${opt}</option><div>`)
     });
-  $(".select-options").append(...options);
-  $(".select-options").css("display","block");
-  }else{
-    $(".input-box").css("display","block");
+    $(".select-options").append(...options);
+    $(".select-options").css("display", "block");
+  } else {
+    $(".input-box").css("display", "block");
   }
 }
-function displayQuestion(player,door){
-  var modal=$("#questionModal");
-  if(!modal.hasClass('in')){
-   modal.css('display','block');
-   modal.addClass('in');
-   fillQuestion(modal);
-  window.doorObj=door;
-  window.modalOpen=true;
-  }
+function displayQuestion(player, door) {
+ if(!gameOver){ var modal = $("#questionModal");
+  if (!modal.hasClass('in')) {
+    modal.css('display', 'block');
+    modal.addClass('in');
+    fillQuestion(modal);
+    window.doorObj = door;
+    window.modalOpen = true;
+  }}
 }
 
-$(document).ready(function(){
+$(document).ready(function () {
   hideModal();
   setupInputEvent();
   setUpStartModal();
+  reset();
 });
 
 
@@ -248,24 +359,25 @@ TopDownGame.Game.prototype = {
 
     this.player.body.velocity.x = 0;
 
-    if(!window.modalOpen)
-    {if (this.cursors.up.isDown) {
-      if (this.player.body.velocity.y == 0)
-        this.player.body.velocity.y -= 50;
-    }
-    else if (this.cursors.down.isDown) {
-      if (this.player.body.velocity.y == 0)
-        this.player.body.velocity.y += 50;
-    }
-    else {
-      this.player.body.velocity.y = 0;
-    }
-    if (this.cursors.left.isDown) {
-      this.player.body.velocity.x -= 50;
-    }
-    else if (this.cursors.right.isDown) {
-      this.player.body.velocity.x += 50;
-    }}else{
+    if (!window.modalOpen) {
+      if (this.cursors.up.isDown) {
+        if (this.player.body.velocity.y == 0)
+          this.player.body.velocity.y -= 50;
+      }
+      else if (this.cursors.down.isDown) {
+        if (this.player.body.velocity.y == 0)
+          this.player.body.velocity.y += 50;
+      }
+      else {
+        this.player.body.velocity.y = 0;
+      }
+      if (this.cursors.left.isDown) {
+        this.player.body.velocity.x -= 50;
+      }
+      else if (this.cursors.right.isDown) {
+        this.player.body.velocity.x += 50;
+      }
+    } else {
       this.player.body.velocity.y = 0;
 
     }
@@ -273,14 +385,14 @@ TopDownGame.Game.prototype = {
   collect: function (player, collectable) {
     console.log('yummy!');
     //remove sprite
-    benefits+=100;
-    if(health<100){
-      health+=33;
+    benefits += 100;
+    if (health < 100) {
+      health += 33;
     }
     collectable.destroy();
   },
   enterDoor: function (player, door) {
-    displayQuestion(player,door);
+    displayQuestion(player, door);
   },
 
 };
