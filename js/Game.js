@@ -109,7 +109,7 @@ var questionArray = [
   },
 ];
 var currentAnswer = "";
-var health = 10;
+var health = 100;
 TopDownGame.Game = function () { };
 this.doorObj = null;
 this.updateBackup = null;
@@ -179,6 +179,7 @@ function hideModal() {
       $('#questionModal .message-display').addClass("wrong");
       wronganswers++;
       if (health <= 0) {
+        health=0;
         gameOver = true;
         setTimeout(function () {
           $("#questionModal").removeClass('in');
