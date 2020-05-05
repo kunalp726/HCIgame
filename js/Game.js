@@ -9,8 +9,8 @@ var benefits = 0;
 var doorCleared = 0;
 var wronganswers = 0;
 var highscore = localStorage.getItem('highscore') || 0;
-var gameOver=false;
-var timeInterval=null;
+var gameOver = false;
+var timeInterval = null;
 var questionArray = [
   {
     ques: 'What does the “https://” at the beginning of a URL denote, as opposed to "http://"?',
@@ -152,6 +152,7 @@ function hideModal() {
     if (currentAnswer == questionArray[question].answer) {
       doorCleared++;
       $('#questionModal .message-display').text("Correct Answer! Door Opened");
+      $('#questionModal .message-display').addClass("correct");
       setTimeout(function () {
         $('#questionModal .message-display').text("");
         question++;
@@ -163,20 +164,30 @@ function hideModal() {
         $(".input-box").val("");
         $(".select-options").css("display", "none");
         $(".select-options").empty();
+        $('#questionModal .message-display').removeClass("correct");
+        $('#questionModal .message-display').removeClass("wrong");
+
         if (doorCleared == 5) {
           gameComplete("win");
         }
       }, 1000)
 
     } else {
-      $('#questionModal .message-display').text("Wrong Answer");
       health -= 34;
+      let additional = health > 0 ? 'Please try again!' : '';
+      $('#questionModal .message-display').text("Wrong Answer! " + additional);
+      $('#questionModal .message-display').addClass("wrong");
       wronganswers++;
       if (health <= 0) {
-        gameOver=true;
-        $("#questionModal").removeClass('in');
-        $("#questionModal").css('display', 'none');
-        gameComplete("lose");
+        gameOver = true;
+        setTimeout(function () {
+          $("#questionModal").removeClass('in');
+          $("#questionModal").css('display', 'none');
+          $('#questionModal .message-display').removeClass("correct");
+          $('#questionModal .message-display').removeClass("wrong");
+          gameComplete("lose");
+
+        }, 1000);
       } else {
         setTimeout(function () {
           question++;
@@ -185,6 +196,8 @@ function hideModal() {
           $(".input-box").val("");
           $(".select-options").css("display", "none");
           $(".select-options").empty();
+          $('#questionModal .message-display').removeClass("correct");
+          $('#questionModal .message-display').removeClass("wrong");
           fillQuestion($("#questionModal"));
         }, 1000)
       }
@@ -213,7 +226,7 @@ function setupTimerHealth() {
     $(".timer").text(`Time : ${minutes}:${seconds}:${totalTime % 10} \n`);
     $(".health").text(`Health left: ${health} % \n`);
     $(".high-score").text(`Current High: ${highscore} \n`);
-    
+
   }, 100);
 }
 function setupInputEvent() {
@@ -230,7 +243,7 @@ function radioChanged() {
   console.log(currentAnswer);
 }
 function fillQuestion(modal) {
-  modal.find(".question").text(`${question+1}. ${questionArray[question].ques}`);
+  modal.find(".question").text(` ${questionArray[question].ques}`);
   let quesType = questionArray[question].type;
   if (quesType === "mcq") {
     const options = questionArray[question].options.map((opt, index) => {
@@ -243,14 +256,16 @@ function fillQuestion(modal) {
   }
 }
 function displayQuestion(player, door) {
- if(!gameOver){ var modal = $("#questionModal");
-  if (!modal.hasClass('in')) {
-    modal.css('display', 'block');
-    modal.addClass('in');
-    fillQuestion(modal);
-    window.doorObj = door;
-    window.modalOpen = true;
-  }}
+  if (!gameOver) {
+    var modal = $("#questionModal");
+    if (!modal.hasClass('in')) {
+      modal.css('display', 'block');
+      modal.addClass('in');
+      fillQuestion(modal);
+      window.doorObj = door;
+      window.modalOpen = true;
+    }
+  }
 }
 
 $(document).ready(function () {

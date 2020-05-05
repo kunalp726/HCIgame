@@ -15,7 +15,6 @@ body{
     font-family: retro;
 }
 .container-login{
-    background-color: white;    
     width: 40%;
     height: 200px;
     margin: auto;
@@ -24,10 +23,24 @@ body{
     box-shadow: 10px 10px 5px -6px rgba(5,5,5,0.65);
     text-align: center;
 }
-input,button{
-    cursor: url('./assets/images/download.png') 7 0,pointer;
+.background-border{
+    border-image-source: url('data:image/svg+xml;utf8,<?xml version="1.0" encoding="UTF-8" ?><svg version="1.1" width="5" height="5" xmlns="http://www.w3.org/2000/svg"><path d="M2 1 h1 v1 h-1 z M1 2 h1 v1 h-1 z M3 2 h1 v1 h-1 z M2 3 h1 v1 h-1 z" fill="rgb(33,37,41)" /></svg>');
+    border-image-slice: 2;
+    border-image-width: 2;
+    border-image-repeat: stretch;
+    border-image-outset: 2;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border-style: solid;
+    border-width: 10px;
+    -webkit-appearance: none;
+    background:url('./assets/images/modalbackground.png');    
+
 }
-.container-login a{
+
+ a,input[type='text'],button{
     color: #fff;
     background-color: #209cee;
     border-image-slice: 2;
@@ -35,6 +48,10 @@ input,button{
     border-image-repeat: stretch;
     border-image-source: url('data:image/svg+xml;utf8,<?xml version="1.0" encoding="UTF-8" ?><svg version="1.1" width="5" height="5" xmlns="http://www.w3.org/2000/svg"><path d="M2 1 h1 v1 h-1 z M1 2 h1 v1 h-1 z M3 2 h1 v1 h-1 z M2 3 h1 v1 h-1 z" fill="rgb(33,37,41)" /></svg>');
     border-image-outset: 2;
+     -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
     position: relative;
     display: inline-block;
     padding: 6px 8px;
@@ -53,6 +70,24 @@ input,button{
     margin-top: 20px;
     font-size: 10px;
 }
+
+input{
+    cursor: url('./assets/images/download.png') 7 0,pointer;
+}
+input[type="text"],button{
+    cursor: url('./assets/images/download.png') 7 0,pointer;
+    background-color: #fff;
+    font-family: retro;
+    color: black;
+    border-image-source: url('data:image/svg+xml;utf8,<?xml version="1.0" encoding="UTF-8" ?><svg version="1.1" width="5" height="5" xmlns="http://www.w3.org/2000/svg"><path d="M2 1 h1 v1 h-1 z M1 2 h1 v1 h-1 z M3 2 h1 v1 h-1 z M2 3 h1 v1 h-1 z" fill="rgb(33,37,41)" /></svg>');
+}
+input::placeholder{
+    font-family: retro;
+    font-size: 8px;
+}
+button{
+    color: black;
+}
 .container-login a::after{
     position: absolute;
     top: -4px;
@@ -70,9 +105,9 @@ html{
 .login-header{
     width: 60%;
     margin: auto;
-    margin-top: 50px;
+    margin-top: 70px;
     text-align: center;
-    font-size: 35px;
+    font-size: 60px;
 }
 .info-display{
     position: absolute;
@@ -86,4 +121,60 @@ html{
 }
 .high-score{
     margin-top: 25px;
+}
+
+.modal-content{
+    box-shadow: none !important;
+    border: none;
+    background: none;
+}
+.modal{
+    background-color: rgba(0,0,0,0.7);
+}
+.modal-dialog{
+    margin-top: 200px;
+}
+.select-options{
+    font-size: 11px;
+}
+.select-options div{
+    margin: 15px 0px;
+}
+.select-options input{
+    margin-right: 10px !important;
+}
+.modal .modal-header {
+    border-bottom: 1px solid black;
+}
+button{
+    background-color: #209cee;
+    color: #fff;
+}
+.quit{
+    background-color: darkred;
+    color: #fff;
+}
+.message-display.correct{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    background-color: darkgreen;
+    width: 100%;
+    color: white;
+    border: none;
+    text-align: center;
+    padding-top: 100px;
+}
+.message-display.wrong{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    background-color: darkred;
+    width: 100%;
+    color: white;
+    border: none;
+    text-align: center;
+    padding-top: 100px;
 }
